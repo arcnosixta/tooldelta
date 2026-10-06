@@ -71,7 +71,7 @@ def validate_schema(schema: Any, location: str, root: bool = False) -> None:
         enum = schema["enum"]
         if not isinstance(enum, list) or not enum:
             raise CatalogError(f"{location}: enum must be a non-empty array.")
-        if len({_canonical(v) for v in enum}) != len(enum):
+        if len({value_key(v) for v in enum}) != len(enum):
             raise CatalogError(f"{location}: enum values must be unique.")
     for key in ("minimum", "maximum", "exclusiveMinimum", "exclusiveMaximum", "multipleOf"):
         if key in schema and (isinstance(schema[key], bool)
@@ -98,6 +98,18 @@ def validate_schema(schema: Any, location: str, root: bool = False) -> None:
 
 def _canonical(value: Any) -> str:
     return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False, allow_nan=False)
+
+
+def value_key(value: Any) -> str:
+    """JSON Schema equality: 1 equals 1.0, but neither equals true."""
+    if isinstance(value, float) and value.is_integer():
+        value = int(value)
+    elif isinstance(value, list):
+        return "[" + ",".join(value_key(item) for item in value) + "]"
+    elif isinstance(value, dict):
+        return "{" + ",".join(_canonical(key) + ":" + value_key(item)
+                              for key, item in sorted(value.items())) + "}"
+    return _canonical(value)
 
 
 def normalize_catalog(data: Any) -> dict[str, dict[str, Any]]:

@@ -7,7 +7,7 @@ import json
 from dataclasses import asdict, dataclass
 from typing import Any
 
-from .catalog import normalize_catalog
+from .catalog import normalize_catalog, value_key
 
 SEVERITIES = ("breaking", "review", "info")
 ANNOTATIONS = {"title", "description", "default", "examples", "deprecated", "readOnly", "writeOnly", "$schema", "$id", "$comment"}
@@ -153,16 +153,22 @@ class _Comparator:
                 if dst_extra is False:
                     emit("breaking", "schema.property", "properties/" + pointer(name),
                          f"{subject} may include now-forbidden property {name!r}.", src_props[name], MISSING)
+                    if isinstance(src_props[name], dict):
+                        self.unsupported(src_props[name], tool, child_path)
                 elif isinstance(dst_extra, dict):
                     a, b = (dst_extra, src_props[name]) if output else (src_props[name], dst_extra)
                     self.schema(a, b, tool, child_path, output)
                 else:
                     emit("review", "schema.property", "properties/" + pointer(name),
                          f"Property {name!r} lost its explicit contract; check server and caller behavior.", src_props[name], MISSING)
+                    if isinstance(src_props[name], dict):
+                        self.unsupported(src_props[name], tool, child_path)
             else:
                 if src_extra is False:
                     emit("info", "schema.property", "properties/" + pointer(name),
                          f"Property {name!r} is newly accepted in the compatibility direction.", MISSING, dst_props[name])
+                    if isinstance(dst_props[name], dict):
+                        self.unsupported(dst_props[name], tool, child_path)
                 else:
                     # Previously accepted extras are now constrained by an explicit property schema.
                     a, b = (dst_props[name], src_extra) if output else (src_extra, dst_props[name])
@@ -200,9 +206,9 @@ class _Comparator:
 
     @staticmethod
     def values(schema: dict[str, Any]) -> set[str] | None:
-        values = {_json(v) for v in schema["enum"]} if "enum" in schema else None
+        values = {value_key(v) for v in schema["enum"]} if "enum" in schema else None
         if "const" in schema:
-            const = {_json(schema["const"])}
+            const = {value_key(schema["const"])}
             values = const if values is None else values & const
         return values
 
@@ -215,6 +221,12 @@ class _Comparator:
             self.add("review", "schema.unsupported", tool, path + "/" + pointer(key),
                      f"Keyword {key!r} requires manual semantic review, even when unchanged.",
                      "Use a full JSON Schema validator and representative fixtures; references are never resolved.", schema[key], schema[key])
+        for name, child in schema.get("properties", {}).items():
+            if isinstance(child, dict):
+                self.unsupported(child, tool, path + "/properties/" + pointer(name))
+        for key in ("items", "additionalProperties"):
+            if isinstance(schema.get(key), dict):
+                self.unsupported(schema[key], tool, path + "/" + key)
 
     def unsupported_pair(self, old: dict[str, Any], new: dict[str, Any], tool: str, path: str) -> None:
         for key in sorted((old.keys() | new.keys()) - SUPPORTED):
