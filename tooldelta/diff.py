@@ -129,7 +129,8 @@ class _Comparator:
 
         for key in ("minimum", "exclusiveMinimum", "minLength", "minItems", "minProperties",
                     "maximum", "exclusiveMaximum", "maxLength", "maxItems", "maxProperties"):
-            a, b = source.get(key), target.get(key)
+            default = 0 if key in {"minLength", "minItems", "minProperties"} else None
+            a, b = source.get(key, default), target.get(key, default)
             if a == b:
                 continue
             lower = key.startswith("min") or key == "exclusiveMinimum"
@@ -177,7 +178,10 @@ class _Comparator:
         # Additional-property rules change their domain when named properties change.
         # Report that ambiguity instead of asserting a proof of full compatibility.
         if src_extra != dst_extra:
-            if src_props.keys() != dst_props.keys():
+            if isinstance(src_extra, bool) and isinstance(dst_extra, bool):
+                a, b = (dst_extra, src_extra) if output else (src_extra, dst_extra)
+                self.schema(a, b, tool, path + "/additionalProperties", output)
+            elif src_props.keys() != dst_props.keys():
                 emit("review", "schema.additional", "additionalProperties",
                      "Additional-property policy and named properties changed together; review their interaction.", src_extra, dst_extra)
             else:

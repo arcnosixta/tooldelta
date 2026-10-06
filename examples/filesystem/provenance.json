@@ -1,0 +1,40 @@
+{
+  "captured_on": "2026-10-06",
+  "node_version": "24.21.0",
+  "platform": "Windows x64",
+  "method": "stdio initialize, notifications/initialized, paginated tools/list only; no tools/call",
+  "allowed_directory": "empty reports/fixture-workspace directory",
+  "baseline_note": "zod 3.23.8 and zod-to-json-schema 3.23.5 explicitly pinned. A separate unpinned capture demonstrates incomplete schemas with current peer resolution.",
+  "catalogs": [
+    {
+      "npm_package": "@modelcontextprotocol/server-filesystem",
+      "version": "2025.1.14",
+      "upstream_git_commit": "ea73a074e8d2b4c424429c7f364dae558211ff30",
+      "npm_tarball_integrity": "sha512-WjJYa2OAAf0fpslyxjzJK3JUeEk10IaDukLOc4NSoJtNptvJONd4NMC6U3Xr04VOb++2iNfM7Vp6Ac7o94Pv6g==",
+      "schema_dependencies": {
+        "@modelcontextprotocol/sdk": "0.5.0",
+        "zod": "3.23.8",
+        "zod-to-json-schema": "3.23.5"
+      },
+      "protocol_version": "2024-11-05",
+      "catalog_file": "2025.1.14.json",
+      "file_sha256": "bde93e6be1108825582779ca45f1d2b0528d9229c60a857282b303554723c415",
+      "tool_count": 11
+    },
+    {
+      "npm_package": "@modelcontextprotocol/server-filesystem",
+      "version": "2026.8.31",
+      "upstream_git_commit": "a40bc270fb5ece62673f8a1196f57116d885c5eb",
+      "npm_tarball_integrity": "sha512-kKaFkyAh6oipvc9+EAbJ552JafnMnOq5nzmzWkp1jJdBhTAAGpmIpWihUG1+rfNhmEFM98gUZDdCHCDD4v6a7Q==",
+      "schema_dependencies": {
+        "@modelcontextprotocol/sdk": "1.32.1",
+        "zod": "4.6.5",
+        "zod-to-json-schema": "3.25.2"
+      },
+      "protocol_version": "2025-06-18",
+      "catalog_file": "2026.8.31.json",
+      "file_sha256": "53d16eafa168a0da23f1df3f01ea5b9cc7cfc93bd42c53ef67e870b8aa2f0989",
+      "tool_count": 14
+    }
+  ]
+}

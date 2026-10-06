@@ -47,8 +47,11 @@ for example `{"q": 7}` becomes invalid if new `q` must be a string. This can be 
 breaking change. Adding it to a previously closed object is an informational
 extension, unless requiredness or unsupported semantics warrant a higher level.
 
-When both the set of properties and the additional-property schema change, their
-interaction is explicitly marked for review. ToolDelta does not solve the
+When both the set of properties and a schema-valued additional-property policy
+change, their interaction is explicitly marked for review. Boolean policy
+relaxation/restriction is checked directly even when named properties change.
+Zero minLength/minItems/minProperties is treated as the implicit default.
+ToolDelta does not solve the
 complete language-inclusion problem for JSON Schema.
 
 ## Metadata and unknown semantics

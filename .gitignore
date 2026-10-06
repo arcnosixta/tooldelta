@@ -7,3 +7,4 @@ dist/
 .coverage
 reports/
 .pytest_cache/
+.tools/

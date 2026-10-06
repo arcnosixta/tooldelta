@@ -60,6 +60,19 @@ class EdgeCaseTests(unittest.TestCase):
         self.assertTrue(compare([a], [b]).fails())
         self.assertTrue(compare([tool({"type": "array"})], [tool({"type": "array", "uniqueItems": True})]).fails())
 
+    def test_boolean_extra_relaxation_with_new_properties_is_not_review(self):
+        a = {"name": "t", "inputSchema": {"type": "object", "additionalProperties": False}}
+        b = {"name": "t", "inputSchema": {"type": "object", "properties": {"optional": {"type": "string"}}}}
+        report = compare([a], [b])
+        self.assertEqual(report.counts["review"], 0)
+        self.assertFalse(report.fails())
+        self.assertTrue(compare([b], [a]).fails())
+
+    def test_zero_minimum_cardinality_is_default_not_breaking(self):
+        for keyword in ("minLength", "minItems", "minProperties"):
+            with self.subTest(keyword=keyword):
+                self.assertFalse(compare([tool({})], [tool({keyword: 0})]).changes)
+
 
 if __name__ == "__main__":
     unittest.main()
