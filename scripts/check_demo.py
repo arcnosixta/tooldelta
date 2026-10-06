@@ -89,8 +89,9 @@ def check():
             page.set_viewport_size({"width": 390, "height": 844})
             assert page.evaluate("document.documentElement.scrollWidth<=innerWidth")
             assert not errors, errors
-            assert all(method == "GET" for method, _ in requests), requests
-            assert all(url.startswith((origin, "https://cdn.jsdelivr.net/pyodide/", "blob:", "about:")) for _, url in requests), requests
+            network = [(method, url) for method, url in requests if url.startswith(("http:", "https:"))]
+            assert all(method == "GET" for method, _ in network), network
+            assert all(url.startswith((origin + "/", "https://cdn.jsdelivr.net/pyodide/v0.29.3/full/")) for _, url in network), network
             context.close()
             browser.close()
     finally:
