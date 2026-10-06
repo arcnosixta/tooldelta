@@ -25,6 +25,11 @@ classifiers = [
 ]
 dependencies = []
 
+[project.urls]
+Homepage = "https://github.com/arcnosixta/tooldelta"
+Repository = "https://github.com/arcnosixta/tooldelta"
+Issues = "https://github.com/arcnosixta/tooldelta/issues"
+
 [project.scripts]
 tooldelta = "tooldelta.cli:main"
 

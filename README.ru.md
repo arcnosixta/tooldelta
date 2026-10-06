@@ -10,6 +10,9 @@ Python 3.11+, MIT. Работает локально: не запускает MC
 [English](README.md) · [Исследование рынка](docs/MARKET.ru.md) ·
 [Описание коммитов](docs/COMMITS.ru.md) · [Правила проверок](docs/CONTRACTS.md)
 
+[Репозиторий GitHub](https://github.com/arcnosixta/tooldelta) ·
+[Проверки CI](https://github.com/arcnosixta/tooldelta/actions/workflows/ci.yml)
+
 ![Пример отчёта ToolDelta](docs/assets/report.png)
 
 ## Запуск без установки

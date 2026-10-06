@@ -23,8 +23,9 @@ The demo reports 4 breaking, 3 review and 3 info findings. Its default exit 1 is
 intentional. Use `--fail-on none` to render an artifact without failing the gate.
 
 GitHub Actions is configured for Python 3.11 / 3.14 on Linux, macOS and Windows,
-and for build/browser checks on Linux with Python 3.12. Those hosted checks are
-pending the first push to a public or private remote.
+and for build/browser checks on Linux with Python 3.12. The first hosted run was
+triggered by publishing [arcnosixta/tooldelta](https://github.com/arcnosixta/tooldelta).
+Current results are available in [GitHub Actions](https://github.com/arcnosixta/tooldelta/actions/workflows/ci.yml).
 
 See [CONTRIBUTING.md](../CONTRIBUTING.md) for repeatable commands. Development
 dependencies (`build`, Playwright) live in the local ignored `.venv`; the package

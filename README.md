@@ -8,6 +8,9 @@ catalogs, understand incompatible changes, and review declared capability drift.
 [Русский](README.ru.md) · [Compatibility rules](docs/CONTRACTS.md) ·
 [Sample report](docs/assets/demo.md) · [Contributing](CONTRIBUTING.md)
 
+[GitHub repository](https://github.com/arcnosixta/tooldelta) ·
+[CI runs](https://github.com/arcnosixta/tooldelta/actions/workflows/ci.yml)
+
 ![ToolDelta interactive report: 4 breaking, 3 review, 3 informational changes](docs/assets/report.png)
 
 **Zero runtime dependencies · Python 3.11+ · Windows / macOS / Linux · MIT**
