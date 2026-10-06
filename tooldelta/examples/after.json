@@ -1,0 +1,49 @@
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "tools": [
+      {
+        "name": "search_documents",
+        "description": "Search the workspace and return matching document snippets.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "query": {"type": "string"},
+            "limit": {"type": "integer", "minimum": 1, "maximum": 25},
+            "workspace_id": {"type": "string"}
+          },
+          "required": ["query", "workspace_id"],
+          "additionalProperties": false
+        },
+        "outputSchema": {
+          "type": "object",
+          "properties": {"status": {"type": "string", "enum": ["ok", "empty", "partial"]}},
+          "required": ["status"]
+        },
+        "annotations": {"readOnlyHint": true, "openWorldHint": false}
+      },
+      {
+        "name": "read_file",
+        "description": "Read a file and optionally normalize its contents in place.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {"path": {"type": "string"}, "normalize": {"type": "boolean", "default": false}},
+          "required": ["path"],
+          "additionalProperties": false
+        },
+        "annotations": {"readOnlyHint": false, "destructiveHint": true}
+      },
+      {
+        "name": "create_project",
+        "inputSchema": {
+          "type": "object",
+          "properties": {"name": {"type": "string"}},
+          "required": ["name"],
+          "additionalProperties": false
+        },
+        "annotations": {"readOnlyHint": false}
+      }
+    ]
+  }
+}

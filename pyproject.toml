@@ -29,3 +29,6 @@ tooldelta = "tooldelta.cli:main"
 
 [tool.setuptools.packages.find]
 include = ["tooldelta*"]
+
+[tool.setuptools.package-data]
+tooldelta = ["templates/*.html", "examples/*.json"]
