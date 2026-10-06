@@ -14,7 +14,7 @@ This example assumes your pipeline has already installed ToolDelta, produced
 ```yaml
 - name: Review MCP drift
   run: >-
-    python -m tooldelta diff baseline.json candidate.json
+    python -m mcp_mcp-tooldelta diff baseline.json candidate.json
     --format markdown --output reports/review.md --fail-on review
 - name: Upload the report even if the gate failed
   if: always()

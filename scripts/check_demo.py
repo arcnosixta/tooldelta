@@ -64,7 +64,7 @@ def check():
             result = json.loads(Path(event.value.path()).read_text(encoding="utf-8"))
             assert result["summary"] == {"breaking": 4, "review": 3, "info": 3}, result["summary"]
             # Warm runtime: identical inputs must clear previous changes.
-            fixture = ROOT / "tooldelta/examples/before.json"
+            fixture = ROOT / "mcp_tooldelta/examples/before.json"
             page.locator("#before-file").set_input_files(fixture)
             page.locator("#after-file").set_input_files(fixture)
             page.get_by_role("button", name="Compare catalogs", exact=True).click()

@@ -9,7 +9,7 @@ Python 3.11+ is required. The runtime and unit tests use only the standard libra
 
 ```sh
 python -m unittest discover -v
-python -m tooldelta demo --format html -o reports/demo.html --fail-on none
+python -m mcp_tooldelta demo --format html -o reports/demo.html --fail-on none
 ```
 
 To test distribution artifacts:
@@ -17,8 +17,8 @@ To test distribution artifacts:
 ```sh
 python -m pip install build
 python -m build
-python -m pip install --force-reinstall dist/tooldelta-0.1.0-py3-none-any.whl
-python -I -m tooldelta demo --fail-on none
+python -m pip install --force-reinstall dist/mcp_tooldelta-0.2.0-py3-none-any.whl
+python -I -m mcp_tooldelta demo --fail-on none
 ```
 
 `-I` excludes the checkout from import resolution, so the smoke test actually
@@ -42,6 +42,17 @@ The check covers filters, search, expanded values, downloaded JSON, mobile
 overflow, untrusted HTML strings, empty catalogs, JavaScript errors and external
 requests. Use `--screenshot docs/assets/report.png` to refresh the README image.
 Playwright and the build frontend are development-only dependencies.
+
+The browser demo has an additional test using the actual Python/WASM engine:
+
+```sh
+python scripts/build_demo.py
+python scripts/check_demo.py
+```
+
+This downloads the pinned Pyodide browser runtime during the test. CLI tests and
+the pre-generated report tests stay offline. The source archive includes browser
+assets and real captured fixtures so it can build the demo independently.
 
 ## Good first contributions
 

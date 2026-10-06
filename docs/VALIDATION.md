@@ -1,7 +1,7 @@
 # Local validation — 2026-10-06
 
-Verified on Windows with Python 3.12.10. These are local results, not a claim
-that hosted CI has already run.
+The initial 0.1 checks below were verified on Windows with Python 3.12.10.
+Hosted CI has since passed on Linux, macOS and Windows with Python 3.11/3.14.
 
 | Check | Result |
 | --- | --- |
@@ -30,3 +30,20 @@ Current results are available in [GitHub Actions](https://github.com/arcnosixta/
 See [CONTRIBUTING.md](../CONTRIBUTING.md) for repeatable commands. Development
 dependencies (`build`, Playwright) live in the local ignored `.venv`; the package
 declares no runtime dependencies. Built distributions live in ignored `dist/`.
+
+## Version 0.2 validation
+
+- 33 Python tests, including captured real MCP metadata and noise regressions, passed.
+- Real browser-worker comparison matches CLI results (4 breaking / 3 review / 3 info).
+- Repeated identical inputs, duplicate-key errors, 8 MiB limit, malicious strings
+  and 390px layout passed in headless Edge.
+- Full browser-context HTTP(S) traffic consists only of static GET requests to
+  the demo and pinned Pyodide assets; no catalog uploads.
+- PyPI naming conflict checked: new distribution `mcp-tooldelta`, module `mcp_tooldelta`.
+- New wheel verified to contain the new namespace and templates/examples without
+  the legacy tooldelta namespace; installed without dependencies in a clean venv.
+- Isolated `python -I -m mcp_tooldelta` and `mcp-tooldelta` console entry point passed.
+- Public GitHub Pages deployment succeeded and returned HTTP 200.
+
+The preceding commands using `tooldelta` describe historical version 0.1.
+Use the 0.2 names in the current README. Latest hosted CI results are linked above.

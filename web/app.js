@@ -97,6 +97,6 @@ function download(content,type,name) { const url=URL.createObjectURL(new Blob([c
 byId('download-html').addEventListener('click',()=>download(currentHtml,'text/html','tooldelta-report.html'));
 byId('download-json').addEventListener('click',()=>download(JSON.stringify(currentJson,null,2),'application/json','tooldelta-report.json'));
 byId('copy-command').addEventListener('click',async()=>{
-  try { await navigator.clipboard.writeText('python -m tooldelta demo'); byId('copy-command').textContent='Copied'; }
+  try { await navigator.clipboard.writeText('python -m mcp_tooldelta demo'); byId('copy-command').textContent='Copied'; }
   catch(_) { byId('copy-command').textContent='Select to copy'; }
 });

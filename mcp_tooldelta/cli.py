@@ -48,7 +48,7 @@ def _report_options(parser: argparse.ArgumentParser) -> None:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(prog="tooldelta", description="Offline MCP contract diffs. Never connects to servers or executes tools.")
+    parser = argparse.ArgumentParser(prog="mcp-tooldelta", description="Offline MCP contract diffs. Never connects to servers or executes tools.")
     parser.add_argument("--version", action="version", version=f"ToolDelta {__version__}")
     commands = parser.add_subparsers(dest="command", required=True)
     diff = commands.add_parser("diff", help="Compare two complete saved tools/list catalogs")
@@ -71,7 +71,7 @@ def main(argv: list[str] | None = None) -> int:
             return 0
         inputs = []
         if args.command == "demo":
-            data = files("tooldelta").joinpath("examples")
+            data = files("mcp_tooldelta").joinpath("examples")
             before = normalize_catalog(json.loads(data.joinpath("before.json").read_text(encoding="utf-8")))
             after = normalize_catalog(json.loads(data.joinpath("after.json").read_text(encoding="utf-8")))
             labels = ("workspace v1.4", "workspace v1.5")
@@ -91,7 +91,7 @@ def main(argv: list[str] | None = None) -> int:
             sys.stdout.write(content)
         return int(report.fails(args.fail_on))
     except (CatalogError, OSError, ValueError) as exc:
-        print(f"tooldelta: {exc}", file=sys.stderr)
+        print(f"mcp-tooldelta: {exc}", file=sys.stderr)
         return 2
 
 

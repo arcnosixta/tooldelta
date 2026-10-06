@@ -29,9 +29,9 @@ jobs:
       - name: Install package
         run: python -m pip install .
       - name: Installed package smoke check
-        run: python -I -m tooldelta demo --format json --fail-on none
+        run: python -I -m mcp_tooldelta demo --format json --fail-on none
       - name: Installed HTML assets smoke check
-        run: python -I -m tooldelta demo --format html -o reports/demo.html --fail-on none
+        run: python -I -m mcp_tooldelta demo --format html -o reports/demo.html --fail-on none
 
   distribution-and-browser:
     runs-on: ubuntu-latest
@@ -47,7 +47,7 @@ jobs:
       - name: Build wheel and sdist
         run: python -m build
       - name: Install built wheel
-        run: python -m pip install dist/tooldelta-0.1.0-py3-none-any.whl
+        run: python -m pip install dist/mcp_tooldelta-0.2.0-py3-none-any.whl
       - name: Install browser
         run: python -m playwright install --with-deps chromium
       - name: Check report behavior in Chromium
@@ -57,7 +57,7 @@ jobs:
       - name: Check the real Python engine in a browser worker
         run: python scripts/check_demo.py --screenshot reports/live-demo.png
       - name: Generate Markdown artifact
-        run: python -I -m tooldelta demo --format markdown -o reports/demo.md --fail-on none
+        run: python -I -m mcp_tooldelta demo --format markdown -o reports/demo.md --fail-on none
       - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         if: always()
         with:

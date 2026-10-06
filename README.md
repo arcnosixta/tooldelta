@@ -11,6 +11,14 @@ catalogs, understand incompatible changes, and review declared capability drift.
 [GitHub repository](https://github.com/arcnosixta/tooldelta) ·
 [CI runs](https://github.com/arcnosixta/tooldelta/actions/workflows/ci.yml)
 
+**[Try it in your browser](https://arcnosixta.github.io/tooldelta/)** — guided
+example, real server update, or your own two catalogs. No sign-up.
+
+[Watch the recorded walkthrough](https://arcnosixta.github.io/tooldelta/demo.webm).
+
+[![CI](https://github.com/arcnosixta/tooldelta/actions/workflows/ci.yml/badge.svg)](https://github.com/arcnosixta/tooldelta/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/arcnosixta/tooldelta)](https://github.com/arcnosixta/tooldelta/releases/latest)
+
 ![ToolDelta interactive report: 4 breaking, 3 review, 3 informational changes](docs/assets/report.png)
 
 **Zero runtime dependencies · Python 3.11+ · Windows / macOS / Linux · MIT**
@@ -20,8 +28,8 @@ catalogs, understand incompatible changes, and review declared capability drift.
 From this checkout, no install or network access needed:
 
 ```sh
-python -m tooldelta demo
-python -m tooldelta demo --format html -o reports/demo.html --fail-on none
+python -m mcp_tooldelta demo
+python -m mcp_tooldelta demo --format html -o reports/demo.html --fail-on none
 ```
 
 Open `reports/demo.html` in your browser. Or open the ready-made
@@ -66,12 +74,47 @@ annotations are untrusted hints, not enforced permissions.
 
 ```sh
 python -m pip install .
-tooldelta --version
+mcp-tooldelta --version
 ```
 
-Or use `python -m tooldelta` directly in the checkout. Installation may download
-the build backend; running ToolDelta has no network requirements. The package has
-not been published to PyPI; do not assume a similarly named package is this project.
+Or use `python -m mcp_tooldelta` directly in the checkout. Installation may download
+the build backend; running ToolDelta has no network requirements.
+
+The distribution and CLI are **`mcp-tooldelta`**, and the Python module is
+**`mcp_tooldelta`**. The name `tooldelta` on PyPI belongs to an unrelated project;
+do not install it expecting this tool. This project has not been published to PyPI.
+Version 0.1 used the old local name; start in a fresh virtual environment when
+upgrading to 0.2. Repository links and report JSON schema remain unchanged.
+
+You can also download the wheel from [GitHub Releases](https://github.com/arcnosixta/tooldelta/releases/latest),
+install it with `python -m pip install path/to/mcp_tooldelta-0.2.0-py3-none-any.whl`,
+and run `mcp-tooldelta demo`.
+
+## A real server update
+
+Captured catalogs from the official MCP Filesystem Server **2025.1.14 → 2026.8.31**
+contain one concrete input restriction: `read_multiple_files.paths` gained
+`minItems: 1`. A caller producing `{"paths": []}` no longer meets the new declared
+contract. Discovery was performed in an empty allowed directory; no filesystem
+tools were called.
+
+```sh
+python -m mcp_tooldelta diff examples/filesystem/2025.1.14.json examples/filesystem/2026.8.31.json
+```
+
+The complete report contains **1 breaking, 45 review, 41 info** findings, including
+new declarations and metadata. [Provenance, dependency pinning and limitations](examples/filesystem/README.md)
+are included with the captured snapshots and original upstream license notices.
+This is a contract change, not a claim of malicious or vulnerable server behavior.
+
+## Browser privacy
+
+The live demo loads the same Python engine into a dedicated browser worker using
+**Pyodide 0.29.3**. Custom catalogs are read locally; their contents are not
+uploaded. The first custom comparison downloads the pinned Python runtime from
+jsDelivr and the engine from GitHub Pages. The guided and real-server examples
+are pre-generated reports and need no Python runtime download. The demo has no
+analytics, advertising, account system, or storage backend.
 
 ## Compare your own tools
 
@@ -81,11 +124,11 @@ Merge paginated responses into one catalog: partial results with `nextCursor`
 are rejected. Compare one server at a time; names must be unique within a catalog.
 
 ```sh
-tooldelta snapshot captured-tools.json -o baseline.json
-tooldelta diff baseline.json candidate.json
-tooldelta diff baseline.json candidate.json --format markdown -o reports/review.md
-tooldelta diff baseline.json candidate.json --format json --fail-on review
-tooldelta diff baseline.json candidate.json --format html -o reports/review.html
+mcp-tooldelta snapshot captured-tools.json -o baseline.json
+mcp-tooldelta diff baseline.json candidate.json
+mcp-tooldelta diff baseline.json candidate.json --format markdown -o reports/review.md
+mcp-tooldelta diff baseline.json candidate.json --format json --fail-on review
+mcp-tooldelta diff baseline.json candidate.json --format html -o reports/review.html
 ```
 
 Accepted JSON forms: `[{tool}, ...]`, `{"tools": [...]}`, and the JSON-RPC envelope
@@ -115,7 +158,7 @@ not the contents of the report. `argparse` usage errors also exit 2.
 In a pipeline where ToolDelta is already installed from a trusted source:
 
 ```sh
-tooldelta diff baseline.json candidate.json --format markdown -o reports/review.md
+mcp-tooldelta diff baseline.json candidate.json --format markdown -o reports/review.md
 ```
 
 The gate fails on relevant changes. Configure your artifact upload step to run even
@@ -125,8 +168,8 @@ is in [docs/CI.md](docs/CI.md).
 ## Python API
 
 ```python
-from tooldelta.catalog import load_catalog
-from tooldelta.diff import compare
+from mcp_tooldelta.catalog import load_catalog
+from mcp_tooldelta.diff import compare
 
 old = load_catalog("baseline.json")
 new = load_catalog("candidate.json")
@@ -158,7 +201,10 @@ python scripts/check_report.py
 
 CI is configured to run tests and installed-package smoke checks on Windows,
 macOS and Linux with Python 3.11 and 3.14, plus build and browser checks on Linux.
-Only Windows / Python 3.12 / Edge has been verified locally so far.
+Windows / Python 3.12 / Edge is verified locally. Hosted checks have also passed
+on Windows/macOS/Linux and Python 3.11/3.14; see the latest CI run for the current
+commit. Browser tests verify the real Pyodide engine, errors, downloads, size
+limits, mobile layout and that HTTP requests do not upload catalog contents.
 
 ## Scope and next steps
 

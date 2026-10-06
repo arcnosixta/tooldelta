@@ -1,7 +1,7 @@
 import unittest
 
-from tooldelta.catalog import CatalogError, normalize_catalog
-from tooldelta.diff import compare
+from mcp_tooldelta.catalog import CatalogError, normalize_catalog
+from mcp_tooldelta.diff import compare
 
 
 def tool(child):

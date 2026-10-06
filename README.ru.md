@@ -13,6 +13,11 @@ Python 3.11+, MIT. Работает локально: не запускает MC
 [Репозиторий GitHub](https://github.com/arcnosixta/tooldelta) ·
 [Проверки CI](https://github.com/arcnosixta/tooldelta/actions/workflows/ci.yml)
 
+**[Попробовать в браузере](https://arcnosixta.github.io/tooldelta/)** — пример,
+реальное обновление сервера или сравнение своих каталогов без установки.
+
+[Короткая запись работы](https://arcnosixta.github.io/tooldelta/demo.webm).
+
 ![Пример отчёта ToolDelta](docs/assets/report.png)
 
 ## Запуск без установки
@@ -20,8 +25,8 @@ Python 3.11+, MIT. Работает локально: не запускает MC
 Из папки проекта:
 
 ```powershell
-python -m tooldelta demo
-python -m tooldelta demo --format html -o reports/demo.html --fail-on none
+python -m mcp_tooldelta demo
+python -m mcp_tooldelta demo --format html -o reports/demo.html --fail-on none
 ```
 
 Откройте `reports/demo.html`. Готовый пример уже находится в
@@ -42,15 +47,37 @@ python -m tooldelta demo --format html -o reports/demo.html --fail-on none
 
 ```powershell
 python -m pip install .
-tooldelta --version
-tooldelta snapshot captured-tools.json -o baseline.json
-tooldelta diff baseline.json candidate.json
-tooldelta diff baseline.json candidate.json --format html -o reports/review.html
+mcp-tooldelta --version
+mcp-tooldelta snapshot captured-tools.json -o baseline.json
+mcp-tooldelta diff baseline.json candidate.json
+mcp-tooldelta diff baseline.json candidate.json --format html -o reports/review.html
 ```
 
 Установка может скачать сборщик пакета. Сама утилита не нуждается в сети.
 На PyPI этот проект не опубликован, совпадение имени пакета не подтверждает его
 принадлежность проекту.
+
+В версии 0.2 пакет и команда называются **`mcp-tooldelta`**, Python-модуль —
+**`mcp_tooldelta`**. Имя `tooldelta` на PyPI занято другим проектом; его установка
+не установит эту утилиту. Для обновления с локальной версии 0.1 используйте
+новое виртуальное окружение. Готовый wheel доступен в
+[GitHub Releases](https://github.com/arcnosixta/tooldelta/releases/latest).
+
+## Демо и реальный кейс
+
+В онлайн-демо можно загрузить два полных каталога. Сравнение выполняет тот же
+Python-код, что и CLI, в отдельном потоке браузера через Pyodide 0.29.3. Содержимое
+файлов не отправляется на сервер; при первом запуске скачивается Python-runtime
+с jsDelivr. Аналитики, регистрации и серверного хранения нет.
+
+Для официального MCP Filesystem Server 2025.1.14 → 2026.8.31 обнаружено изменение:
+у `read_multiple_files.paths` появился `minItems: 1`. Старый каталог допускал
+пустой массив, новый требует хотя бы один путь. Всего в отчёте 1 breaking,
+45 review, 41 info; это количество замечаний о контрактах и метаданных,
+а не число уязвимостей. Источники, версии зависимостей и лицензии сохранены в
+[реальном примере](examples/filesystem/README.md). Файловые инструменты не вызывались.
+
+## Входные данные
 
 Сохраните полные ответы `tools/list` из своего MCP-клиента или интеграционных
 тестов до и после обновления. ToolDelta не получает их автоматически.

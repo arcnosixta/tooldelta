@@ -4,8 +4,8 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from tooldelta.catalog import CatalogError, load_catalog, normalize_catalog
-from tooldelta.diff import compare
+from mcp_tooldelta.catalog import CatalogError, load_catalog, normalize_catalog
+from mcp_tooldelta.diff import compare
 
 
 def tool(schema=None, **extra):

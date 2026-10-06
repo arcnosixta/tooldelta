@@ -3,8 +3,8 @@ requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "tooldelta"
-version = "0.1.0"
+name = "mcp-tooldelta"
+version = "0.2.0"
 description = "Offline MCP tool contract diffs with actionable compatibility reports"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -26,15 +26,15 @@ classifiers = [
 dependencies = []
 
 [project.urls]
-Homepage = "https://github.com/arcnosixta/tooldelta"
+Homepage = "https://arcnosixta.github.io/tooldelta/"
 Repository = "https://github.com/arcnosixta/tooldelta"
 Issues = "https://github.com/arcnosixta/tooldelta/issues"
 
 [project.scripts]
-tooldelta = "tooldelta.cli:main"
+mcp-tooldelta = "mcp_tooldelta.cli:main"
 
 [tool.setuptools.packages.find]
-include = ["tooldelta*"]
+include = ["mcp_tooldelta*"]
 
 [tool.setuptools.package-data]
-tooldelta = ["templates/*.html", "examples/*.json"]
+mcp_tooldelta = ["templates/*.html", "examples/*.json"]

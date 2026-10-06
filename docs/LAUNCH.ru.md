@@ -2,8 +2,11 @@
 
 Репозиторий опубликован: [arcnosixta/tooldelta](https://github.com/arcnosixta/tooldelta).
 Ветка main сохраняет отдельные коммиты разработки с подробными русскими описаниями.
-GitHub Actions запущен после отправки истории. PyPI-пакет и GitHub release пока
-не опубликованы. Ниже сохранён план выпуска; создание репозитория уже выполнено.
+GitHub Actions успешно проходил на Windows, macOS и Linux. Демо опубликовано:
+https://arcnosixta.github.io/tooldelta/. Подготовлен выпуск 0.2.0 с новым именем
+пакета `mcp-tooldelta` и модулем `mcp_tooldelta`: `tooldelta` на PyPI занят другим
+проектом. Сам этот проект на PyPI не опубликован.
+Ниже сохранён исходный план; создание репозитория, демо и проверка CI выполнены.
 
 1. Проверить имя ToolDelta на GitHub/PyPI перед выпуском. При конфликте выбрать
    другое имя и последовательно изменить пакет, CLI и документацию.
@@ -14,7 +17,7 @@ GitHub Actions запущен после отправки истории. PyPI-�
    `compatibility`, `python`, `offline`, `cli`. Включить private vulnerability reporting.
 4. Дождаться первого GitHub Actions и исправить реальные проблемы совместимости.
    Локальная проверка Windows не заменяет CI на macOS/Linux.
-5. Создать release 0.1.0 с wheel/sdist, changelog и явно обозначенным статусом alpha.
+5. Создать release 0.2.0 с wheel/sdist, changelog и явно обозначенным статусом alpha.
    Не публиковать пакет под чужим занятым именем.
 6. Подготовить короткую запись экрана: demo → required workspace_id → enum output →
    hints read_file → экспорт отчёта. Длительность до 30–45 секунд.
@@ -33,5 +36,7 @@ GitHub Actions запущен после отправки истории. PyPI-�
 > explicit JSON Schema subset, not a full compatibility proof or security scanner.
 > I'd especially welcome sanitized catalogs that produce noisy or missing findings.
 
-Вставить ссылку на реальный репозиторий после публикации. Никакие сообщения
-от имени пользователя не отправлены.
+Готовые тексты с настоящими ссылками находятся в [PROMOTION.md](PROMOTION.md).
+Внешние посты не отправлены: для их публикации нужны аккаунты соответствующих
+площадок и выбор конкретного сообщества. Публикация собственного репозитория,
+демо и release не означает, что проект уже попал в рекомендации.

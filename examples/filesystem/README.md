@@ -6,7 +6,7 @@ package on 2026-10-06. These are actual `tools/list` responses, not handcrafted
 tool schemas. Compare the saved snapshots offline:
 
 ```sh
-python -m tooldelta diff examples/filesystem/2025.1.14.json examples/filesystem/2026.8.31.json
+python -m mcp_mcp-tooldelta diff examples/filesystem/2025.1.14.json examples/filesystem/2026.8.31.json
 ```
 
 Result with ToolDelta's supported rules: **1 breaking, 45 review, 41 info**.
@@ -62,7 +62,7 @@ selected servers through the opt-in development capture script:
 ```sh
 python scripts/capture_mcp_catalog.py --output reports/old.json -- node reports/fs-old/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js reports/fixture-workspace
 python scripts/capture_mcp_catalog.py --output reports/new.json -- node reports/fs-new/node_modules/@modelcontextprotocol/server-filesystem/dist/index.js reports/fixture-workspace
-python -m tooldelta diff reports/old.json reports/new.json
+python -m mcp_mcp-tooldelta diff reports/old.json reports/new.json
 ```
 
 Future transitive resolutions may differ; check the provenance dependency

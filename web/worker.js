@@ -10,7 +10,7 @@ async function initialize() {
   const response=await fetch('engine.zip');
   if(!response.ok) throw new Error('Could not download the comparison engine.');
   pyodide.unpackArchive(await response.arrayBuffer(),'zip',{extractDir:'/home/pyodide'});
-  await pyodide.runPythonAsync('from tooldelta.catalog import load_catalog\nfrom tooldelta.diff import compare\nfrom tooldelta.render import render\nimport json, os');
+  await pyodide.runPythonAsync('from mcp_tooldelta.catalog import load_catalog\nfrom mcp_tooldelta.diff import compare\nfrom mcp_tooldelta.render import render\nimport json, os');
   engine=pyodide;
   return engine;
 }

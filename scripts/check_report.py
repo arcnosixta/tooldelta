@@ -7,9 +7,9 @@ import tempfile
 
 from playwright.sync_api import expect, sync_playwright
 
-from tooldelta.cli import main
-from tooldelta.diff import compare
-from tooldelta.render import render
+from mcp_tooldelta.cli import main
+from mcp_tooldelta.diff import compare
+from mcp_tooldelta.render import render
 
 
 def check():

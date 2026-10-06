@@ -22,7 +22,7 @@ def render(report: Report, format: str = "text", before: str = "baseline", after
     if format == "json":
         return json.dumps(report.to_dict(), ensure_ascii=False, indent=2) + "\n"
     if format == "html":
-        template = files("tooldelta").joinpath("templates/report.html").read_text(encoding="utf-8")
+        template = files("mcp_tooldelta").joinpath("templates/report.html").read_text(encoding="utf-8")
         payload = {**report.to_dict(), "labels": {"before": before, "after": after}}
         encoded = json.dumps(payload, ensure_ascii=False).replace("&", "\\u0026").replace("<", "\\u003c").replace(">", "\\u003e").replace("\u2028", "\\u2028").replace("\u2029", "\\u2029")
         return template.replace("__TOOLDELTA_PAYLOAD__", encoded)

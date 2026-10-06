@@ -3,8 +3,8 @@
 from pathlib import Path
 import unittest
 
-from tooldelta.catalog import CatalogError, load_catalog
-from tooldelta.diff import compare
+from mcp_tooldelta.catalog import CatalogError, load_catalog
+from mcp_tooldelta.diff import compare
 
 ROOT = Path(__file__).resolve().parent.parent
 

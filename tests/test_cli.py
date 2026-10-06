@@ -8,9 +8,9 @@ import sys
 import tempfile
 import unittest
 
-from tooldelta.cli import main
-from tooldelta.diff import compare
-from tooldelta.render import render
+from mcp_tooldelta.cli import main
+from mcp_tooldelta.diff import compare
+from mcp_tooldelta.render import render
 
 
 class CliTests(unittest.TestCase):
@@ -53,14 +53,14 @@ class CliTests(unittest.TestCase):
         self.assertIn("tooldelta:", error)
 
     def test_real_module_process(self):
-        result = subprocess.run([sys.executable, "-m", "tooldelta", "demo", "--format", "json"], capture_output=True, text=True, encoding="utf-8")
+        result = subprocess.run([sys.executable, "-m", "mcp_tooldelta", "demo", "--format", "json"], capture_output=True, text=True, encoding="utf-8")
         self.assertEqual(result.returncode, 1)
         self.assertEqual(json.loads(result.stdout)["schema_version"], 1)
         with tempfile.TemporaryDirectory() as directory:
             before, after = Path(directory) / "before.json", Path(directory) / "after.json"
             before.write_text('{"tools": []}', encoding="utf-8")
             after.write_text(json.dumps({"tools": [{"name": "поиск🔎", "inputSchema": {"type": "object"}}]}, ensure_ascii=False), encoding="utf-8")
-            result = subprocess.run([sys.executable, "-m", "tooldelta", "diff", str(before), str(after), "--format", "json"], capture_output=True, text=True, encoding="utf-8", env={**os.environ, "PYTHONIOENCODING": "cp1251"})
+            result = subprocess.run([sys.executable, "-m", "mcp_tooldelta", "diff", str(before), str(after), "--format", "json"], capture_output=True, text=True, encoding="utf-8", env={**os.environ, "PYTHONIOENCODING": "cp1251"})
             self.assertEqual(result.returncode, 0)
             self.assertEqual(json.loads(result.stdout)["changes"][0]["tool"], "поиск🔎")
 
