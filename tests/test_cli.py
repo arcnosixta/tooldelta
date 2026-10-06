@@ -1,6 +1,7 @@
 import contextlib
 import io
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -55,6 +56,13 @@ class CliTests(unittest.TestCase):
         result = subprocess.run([sys.executable, "-m", "tooldelta", "demo", "--format", "json"], capture_output=True, text=True, encoding="utf-8")
         self.assertEqual(result.returncode, 1)
         self.assertEqual(json.loads(result.stdout)["schema_version"], 1)
+        with tempfile.TemporaryDirectory() as directory:
+            before, after = Path(directory) / "before.json", Path(directory) / "after.json"
+            before.write_text('{"tools": []}', encoding="utf-8")
+            after.write_text(json.dumps({"tools": [{"name": "поиск🔎", "inputSchema": {"type": "object"}}]}, ensure_ascii=False), encoding="utf-8")
+            result = subprocess.run([sys.executable, "-m", "tooldelta", "diff", str(before), str(after), "--format", "json"], capture_output=True, text=True, encoding="utf-8", env={**os.environ, "PYTHONIOENCODING": "cp1251"})
+            self.assertEqual(result.returncode, 0)
+            self.assertEqual(json.loads(result.stdout)["changes"][0]["tool"], "поиск🔎")
 
 
 class RenderingTests(unittest.TestCase):

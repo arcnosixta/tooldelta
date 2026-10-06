@@ -85,9 +85,9 @@ def main(argv: list[str] | None = None) -> int:
             _write(args.output, content, args.force, inputs)
             print("Report written. " + ", ".join(f"{count} {level}" for level, count in report.counts.items()), file=sys.stderr)
         else:
-            # Windows consoles may not be configured for UTF-8. Files always are.
+            # Stable UTF-8 is essential for machine-readable output on Windows too.
             if hasattr(sys.stdout, "reconfigure"):
-                sys.stdout.reconfigure(errors="backslashreplace")
+                sys.stdout.reconfigure(encoding="utf-8", errors="strict")
             sys.stdout.write(content)
         return int(report.fails(args.fail_on))
     except (CatalogError, OSError, ValueError) as exc:

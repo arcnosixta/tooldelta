@@ -1,0 +1,25 @@
+name: Bug report
+description: Report a missed, noisy, or incorrect contract finding
+title: '[Bug] '
+labels: [bug]
+body:
+  - type: textarea
+    id: observed
+    attributes:
+      label: What happened, and what should have happened?
+      description: Include the ToolDelta command, exit code, OS and Python version.
+    validations:
+      required: true
+  - type: textarea
+    id: fixture
+    attributes:
+      label: Minimal before / after catalogs
+      description: Remove credentials, private URLs and confidential descriptions before posting.
+      render: json
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Relevant report output
+      description: Include the affected tool, path, severity and explanation.
