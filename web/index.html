@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Compare MCP tool contracts in your browser. See breaking input/output changes and capability drift. Open source, local comparison, no sign-up.">
+<meta name="theme-color" content="#0b1016">
+<meta name="referrer" content="no-referrer">
+<meta property="og:title" content="ToolDelta — review MCP updates before your agents do">
+<meta property="og:description" content="Try the live contract diff. Compare saved tools/list catalogs in your browser without uploading their contents.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://arcnosixta.github.io/tooldelta/">
+<meta property="og:image" content="https://arcnosixta.github.io/tooldelta/report.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://arcnosixta.github.io/tooldelta/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="app.css">
+<title>ToolDelta — live MCP contract diff</title>
+</head>
+<body>
+<header class="topbar"><a class="brand" href="./"><span aria-hidden="true">Δ</span>ToolDelta</a><nav aria-label="Project"><a href="https://github.com/arcnosixta/tooldelta#readme">Documentation</a><a class="github" href="https://github.com/arcnosixta/tooldelta">View on GitHub</a></nav></header>
+<main>
+<section class="workspace" aria-labelledby="heading">
+<div class="intro"><div class="eyebrow">MCP CONTRACT REVIEW</div><h1 id="heading">An update shouldn’t surprise your agent.</h1><p>Review changing parameters, response contracts, and declared behavior before you update a server.</p></div>
+<div class="tabs" role="group" aria-label="Choose an example"><button class="tab active" data-example="sample" aria-pressed="true">Guided example</button><button class="tab" data-example="filesystem" aria-pressed="false">Real server update</button><button class="tab" data-example="custom" aria-pressed="false">Compare your catalogs</button></div>
+<div class="example-note" id="example-note">A fictional workspace update: a required argument, a tighter limit, a wider response enum, and changed behavior hints.</div>
+<form id="compare-form" hidden>
+<div class="file-pair"><label class="file-card"><span class="file-title">Baseline catalog</span><span class="file-hint">Complete tools/list JSON before the update</span><input id="before-file" name="before" type="file" accept=".json,application/json" required><span class="file-name" id="before-name">No file selected</span></label><label class="file-card"><span class="file-title">Candidate catalog</span><span class="file-hint">Complete tools/list JSON after the update</span><input id="after-file" name="after" type="file" accept=".json,application/json" required><span class="file-name" id="after-name">No file selected</span></label></div>
+<div class="compare-actions"><button class="primary" id="compare" type="submit">Compare catalogs</button><button class="secondary" id="load-sample" type="button">Use sample files</button><button class="secondary" id="cancel" type="button" hidden>Cancel comparison</button></div>
+<p class="privacy">Comparison runs on your device using the same Python engine as the CLI. Your files are not uploaded. The first comparison downloads the Python browser runtime from jsDelivr; subsequent comparisons reuse it. Up to 8 MiB per file.</p>
+</form>
+<p class="status" id="status" role="status" aria-live="polite"></p>
+<div class="error" id="error" role="alert" hidden></div>
+</section>
+<section class="report-area" aria-label="Comparison result"><div class="report-toolbar"><span id="report-label">Guided example · 4 breaking · 3 review · 3 info</span><div><a id="open-report" href="sample.html" target="_blank" rel="noopener">Open full report</a><button id="download-html" type="button" hidden>Download HTML</button><button id="download-json" type="button" hidden>Download JSON</button></div></div><iframe id="report" title="Interactive MCP contract comparison" src="sample.html?embed=1" sandbox="allow-scripts allow-downloads"></iframe></section>
+<section class="cli"><div><h2>Prefer a terminal?</h2><p>Zero runtime dependencies. Python 3.11+. MIT licensed.</p></div><div class="command"><code>python -m tooldelta demo</code><button id="copy-command" type="button" aria-label="Copy demo command">Copy</button></div><p class="cli-note">Clone the <a href="https://github.com/arcnosixta/tooldelta">repository</a> first. The CLI stays completely offline. The demo intentionally exits 1 because it contains changes requiring review.</p></section>
+<footer><span>Alpha · static contract checks, not a safety certificate.</span><a href="https://github.com/arcnosixta/tooldelta/blob/main/docs/CONTRACTS.md">Rules and limitations</a><a href="https://github.com/arcnosixta/tooldelta/issues/new/choose">Share a sanitized failing case</a></footer>
+</main>
+<noscript><p class="no-script">JavaScript is needed for in-browser comparison. You can still open the <a href="sample.html">sample report</a> or run the Python CLI.</p></noscript>
+<script src="app.js" defer></script>
+</body>
+</html>

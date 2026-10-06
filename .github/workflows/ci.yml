@@ -52,6 +52,10 @@ jobs:
         run: python -m playwright install --with-deps chromium
       - name: Check report behavior in Chromium
         run: python scripts/check_report.py --screenshot reports/report.png
+      - name: Build browser comparison demo
+        run: python scripts/build_demo.py
+      - name: Check the real Python engine in a browser worker
+        run: python scripts/check_demo.py --screenshot reports/live-demo.png
       - name: Generate Markdown artifact
         run: python -I -m tooldelta demo --format markdown -o reports/demo.md --fail-on none
       - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
