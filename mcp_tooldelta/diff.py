@@ -177,16 +177,17 @@ class _Comparator:
 
         # Additional-property rules change their domain when named properties change.
         # Report that ambiguity instead of asserting a proof of full compatibility.
-        if src_extra != dst_extra:
-            if isinstance(src_extra, bool) and isinstance(dst_extra, bool):
+        if isinstance(src_extra, bool) and isinstance(dst_extra, bool):
+            if src_extra != dst_extra:
                 a, b = (dst_extra, src_extra) if output else (src_extra, dst_extra)
                 self.schema(a, b, tool, path + "/additionalProperties", output)
-            elif src_props.keys() != dst_props.keys():
-                emit("review", "schema.additional", "additionalProperties",
-                     "Additional-property policy and named properties changed together; review their interaction.", src_extra, dst_extra)
-            else:
-                a, b = (dst_extra, src_extra) if output else (src_extra, dst_extra)
-                self.schema(a, b, tool, path + "/additionalProperties", output)
+        elif src_props.keys() != dst_props.keys() and value_key(src_extra) != value_key(dst_extra):
+            emit("review", "schema.additional", "additionalProperties",
+                 "Additional-property policy and named properties changed together; review their interaction.", src_extra, dst_extra)
+        else:
+            # Inspect unchanged schemas too, and preserve JSON's boolean/number distinction.
+            a, b = (dst_extra, src_extra) if output else (src_extra, dst_extra)
+            self.schema(a, b, tool, path + "/additionalProperties", output)
 
         if "items" in source or "items" in target:
             a, b = source.get("items", True), target.get("items", True)

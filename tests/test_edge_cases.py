@@ -68,6 +68,44 @@ class EdgeCaseTests(unittest.TestCase):
         self.assertFalse(report.fails())
         self.assertTrue(compare([b], [a]).fails())
 
+    def test_additional_values_distinguish_numbers_and_booleans(self):
+        for direction in ("inputSchema", "outputSchema"):
+            for keyword in ("const", "enum"):
+                with self.subTest(direction=direction, keyword=keyword):
+                    def catalog(value):
+                        schema = {"type": "object", "additionalProperties": {
+                            keyword: [value] if keyword == "enum" else value}}
+                        return [{"name": "t", "inputSchema": {"type": "object"}, direction: schema}]
+                    report = compare(catalog(1), catalog(True))
+                    self.assertEqual(report.counts["breaking"], 1)
+                    self.assertEqual(report.changes[0].path, f"/{direction}/additionalProperties/{keyword}")
+                    self.assertFalse(compare(catalog(1), catalog(1.0)).changes)
+
+    def test_unchanged_additional_schema_requires_unknown_keyword_review(self):
+        for direction in ("inputSchema", "outputSchema"):
+            for extra, suffix in (
+                ({"type": "string", "pattern": "^a"}, "/pattern"),
+                ({"type": "object", "properties": {"nested": {"$ref": "#/other"}}},
+                 "/properties/nested/$ref"),
+            ):
+                with self.subTest(direction=direction, extra=extra):
+                    schema = {"type": "object", "additionalProperties": extra}
+                    catalog = [{"name": "t", "inputSchema": {"type": "object"}, direction: schema}]
+                    report = compare(catalog, catalog)
+                    self.assertEqual(report.counts["review"], 1)
+                    self.assertTrue(report.fails("review"))
+                    self.assertEqual(report.changes[0].path, f"/{direction}/additionalProperties{suffix}")
+
+    def test_unchanged_additional_schema_review_survives_property_changes(self):
+        extra = {"type": "string", "pattern": "^a"}
+        a = {"name": "t", "inputSchema": {"type": "object", "additionalProperties": extra}}
+        b = {"name": "t", "inputSchema": {"type": "object", "additionalProperties": extra,
+                                               "properties": {"x": {"type": "string"}}}}
+        report = compare([a], [b])
+        self.assertTrue(any(c.code == "schema.unsupported" and
+                            c.path == "/inputSchema/additionalProperties/pattern"
+                            for c in report.changes))
+
     def test_zero_minimum_cardinality_is_default_not_breaking(self):
         for keyword in ("minLength", "minItems", "minProperties"):
             with self.subTest(keyword=keyword):
