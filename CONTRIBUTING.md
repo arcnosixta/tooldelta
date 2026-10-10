@@ -17,12 +17,16 @@ To test distribution artifacts:
 ```sh
 python -m pip install build
 python -m build
-python -m pip install --force-reinstall dist/mcp_tooldelta-0.2.0-py3-none-any.whl
+python -m pip install --force-reinstall dist/mcp_tooldelta-0.2.1-py3-none-any.whl
 python -I -m mcp_tooldelta demo --fail-on none
 ```
 
 `-I` excludes the checkout from import resolution, so the smoke test actually
 checks the installed package and its bundled examples/templates.
+
+Build the standalone agent skill archive with `python scripts/build_skill.py`.
+It contains `SKILL.md` and the MIT license; the Python engine remains a separate
+installation. The skill source is included in the sdist, but not in the wheel.
 
 ## Optional browser verification
 

@@ -1,10 +1,12 @@
 # Changelog
 
-## Unreleased
+## 0.2.1 — prepared for release
 
 - Compare schema-valued additionalProperties even when unchanged, preserving
   review findings for unsupported nested keywords.
 - Detect boolean versus numeric const/enum changes in additionalProperties.
+- Portable agent skill for local MCP contract review, with a separately installed
+  Python engine and a versioned ZIP built by scripts/build_skill.py.
 
 ## 0.2.0 — 2026-10-06
 

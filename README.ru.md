@@ -63,6 +63,27 @@ mcp-tooldelta diff baseline.json candidate.json --format html -o reports/review.
 новое виртуальное окружение. Готовый wheel доступен в
 [GitHub Releases](https://github.com/arcnosixta/tooldelta/releases/latest).
 
+## Использование skill с агентом
+
+[skills/mcp-tooldelta/SKILL.md](skills/mcp-tooldelta/SKILL.md) объясняет агенту,
+как выбрать baseline и candidate, запустить CLI и разобрать замечания.
+Сначала установите Python-движок из исходников командами выше и проверьте
+`python -m mcp_tooldelta --version` в окружении, которым пользуется агент.
+
+Подключите папку `skills/mcp-tooldelta` способом установки skills, который
+поддерживает ваш агент. Команда `python scripts/build_skill.py` из репозитория
+создаёт `dist/mcp-tooldelta-skill-0.2.1.zip` со skill и MIT-лицензией.
+ZIP содержит инструкции; Python-движок устанавливается отдельно.
+
+Пример запроса:
+
+> Используй skill mcp-tooldelta: сравни baseline.json с candidate.json,
+> создай HTML-отчёт reports/mcp-review.html и объясни breaking-изменения
+> и замечания, требующие ручного ревью.
+
+Нужны два полных сохранённых каталога. Skill не подключается к серверам,
+не вызывает их инструменты и не загружает содержимое каталогов в сеть.
+
 ## Демо и реальный кейс
 
 В онлайн-демо можно загрузить два полных каталога. Сравнение выполняет тот же

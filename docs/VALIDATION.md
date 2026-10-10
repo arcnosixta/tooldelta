@@ -47,3 +47,23 @@ declares no runtime dependencies. Built distributions live in ignored `dist/`.
 
 The preceding commands using `tooldelta` describe historical version 0.1.
 Use the 0.2 names in the current README. Latest hosted CI results are linked above.
+
+## Version 0.2.1 release preparation — 2026-10-10
+
+- Previous skill/fix commit `08759b0`: hosted
+  [CI](https://github.com/arcnosixta/tooldelta/actions/runs/38033755179) and
+  [Public demo](https://github.com/arcnosixta/tooldelta/actions/runs/38033755223)
+  both completed successfully.
+- 36 Python unit/CLI tests passed locally on Windows / Python 3.12.
+- Wheel and sdist built successfully; the wheel was built from the sdist.
+- The wheel installed with `--no-deps --no-index` into a fresh virtual environment.
+  Isolated `python -I -m mcp_tooldelta` reported 0.2.1 and produced the expected
+  JSON demo counts and HTML report; the console entry point also reported 0.2.1.
+- The wheel declares no runtime dependencies and contains no legacy namespace.
+- The sdist includes the skill source; the standalone versioned ZIP contains
+  exactly SKILL.md and the MIT license. Two builds produced identical ZIP bytes.
+- Both headless Edge checks passed: standalone report behavior and live Pyodide
+  comparison, including downloads, invalid JSON, limits, mobile layout, malicious
+  catalog strings, and absence of catalog uploads.
+
+These are preparation checks, not a claim that 0.2.1 is publicly released.

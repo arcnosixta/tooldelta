@@ -87,8 +87,29 @@ Version 0.1 used the old local name; start in a fresh virtual environment when
 upgrading to 0.2. Repository links and report JSON schema remain unchanged.
 
 You can also download the wheel from [GitHub Releases](https://github.com/arcnosixta/tooldelta/releases/latest),
-install it with `python -m pip install path/to/mcp_tooldelta-0.2.0-py3-none-any.whl`,
+install it with `python -m pip install path/to/mcp_tooldelta-0.2.1-py3-none-any.whl`,
 and run `mcp-tooldelta demo`.
+
+## Use with an agent skill
+
+[skills/mcp-tooldelta/SKILL.md](skills/mcp-tooldelta/SKILL.md) guides an agent through
+choosing the baseline and candidate, running the CLI, and interpreting findings.
+Install the Python engine from this checkout as above, then check
+`python -m mcp_tooldelta --version` in the environment the agent uses.
+
+Copy the `skills/mcp-tooldelta` folder using your agent's supported skill
+installation mechanism. From this checkout, `python scripts/build_skill.py`
+creates `dist/mcp-tooldelta-skill-0.2.1.zip` containing the skill and MIT license.
+The ZIP contains instructions; install the Python engine separately.
+
+Example request:
+
+> Use the mcp-tooldelta skill to compare baseline.json with candidate.json.
+> Create an HTML report at reports/mcp-review.html and explain the breaking
+> changes and unresolved review items.
+
+The agent needs two complete saved catalogs. The skill does not discover live
+servers, call their tools, or upload catalog contents.
 
 ## A real server update
 
