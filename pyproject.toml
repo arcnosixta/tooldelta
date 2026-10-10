@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "mcp-tooldelta"
-version = "0.2.0"
+version = "0.2.1"
 description = "Offline MCP tool contract diffs with actionable compatibility reports"
 readme = "README.md"
 requires-python = ">=3.11"

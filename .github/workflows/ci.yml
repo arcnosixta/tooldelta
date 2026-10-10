@@ -47,7 +47,9 @@ jobs:
       - name: Build wheel and sdist
         run: python -m build
       - name: Install built wheel
-        run: python -m pip install dist/mcp_tooldelta-0.2.0-py3-none-any.whl
+        run: python -m pip install dist/mcp_tooldelta-0.2.1-py3-none-any.whl
+      - name: Build portable agent skill
+        run: python scripts/build_skill.py
       - name: Install browser
         run: python -m playwright install --with-deps chromium
       - name: Check report behavior in Chromium
