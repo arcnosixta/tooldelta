@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Compare schema-valued additionalProperties even when unchanged, preserving
+  review findings for unsupported nested keywords.
+- Detect boolean versus numeric const/enum changes in additionalProperties.
+
 ## 0.2.0 — 2026-10-06
 
 - Public browser demo: sample, real server update, and local comparison of custom catalogs.
