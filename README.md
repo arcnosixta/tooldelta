@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/assets/logo.svg" width="120" alt="ToolDelta logo">
+</p>
+
 # ToolDelta
 
 **See what an MCP update will break before your agent finds out.**

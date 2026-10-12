@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/assets/logo.svg" width="120" alt="ToolDelta logo">
+</p>
+
 # ToolDelta
 
 **Узнайте, что сломает обновление MCP-сервера, до запуска агента.**
